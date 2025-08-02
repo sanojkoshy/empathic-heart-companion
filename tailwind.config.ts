@@ -26,7 +26,8 @@ export default {
 				foreground: 'hsl(var(--foreground))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					foreground: 'hsl(var(--primary-foreground))',
+					glow: 'hsl(var(--primary-glow))'
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
@@ -52,6 +53,14 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				healing: {
+					DEFAULT: 'hsl(var(--healing))',
+					foreground: 'hsl(var(--healing-foreground))'
+				},
+				comfort: {
+					DEFAULT: 'hsl(var(--comfort))',
+					foreground: 'hsl(var(--comfort-foreground))'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -62,6 +71,20 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				}
+			},
+			backgroundImage: {
+				'gradient-aurora': 'var(--gradient-aurora)',
+				'gradient-sunset': 'var(--gradient-sunset)',
+				'gradient-ocean': 'var(--gradient-ocean)',
+				'gradient-healing': 'var(--gradient-healing)'
+			},
+			boxShadow: {
+				'soft': 'var(--shadow-soft)',
+				'glow': 'var(--shadow-glow)',
+				'embrace': 'var(--shadow-embrace)'
+			},
+			transitionTimingFunction: {
+				'gentle': 'cubic-bezier(0.4, 0, 0.2, 1)'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
