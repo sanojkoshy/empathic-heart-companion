@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { Send, Heart } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import AIInteractiveSection from './AIInteractiveSection';
 
 interface Message {
   id: string;
@@ -15,9 +16,10 @@ interface Message {
 
 interface ChatInterfaceProps {
   onEmotionDetected?: (emotion: string) => void;
+  currentEmotion?: string;
 }
 
-const ChatInterface: React.FC<ChatInterfaceProps> = ({ onEmotionDetected }) => {
+const ChatInterface: React.FC<ChatInterfaceProps> = ({ onEmotionDetected, currentEmotion = 'neutral' }) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -104,21 +106,22 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onEmotionDetected }) => {
     return emotionResponses[Math.floor(Math.random() * emotionResponses.length)];
   };
 
-  const handleSendMessage = async () => {
-    if (!inputText.trim()) return;
+  const handleSendMessage = async (customMessage?: string) => {
+    const messageToSend = customMessage || inputText.trim();
+    if (!messageToSend) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
-      text: inputText.trim(),
+      text: messageToSend,
       sender: 'user',
       timestamp: new Date()
     };
 
-    const detectedEmotion = detectEmotion(inputText);
+    const detectedEmotion = detectEmotion(messageToSend);
     userMessage.emotion = detectedEmotion;
 
     setMessages(prev => [...prev, userMessage]);
-    setInputText('');
+    if (!customMessage) setInputText('');
     setIsTyping(true);
 
     // Notify parent component about emotion
@@ -128,7 +131,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onEmotionDetected }) => {
     setTimeout(() => {
       const aiResponse: Message = {
         id: (Date.now() + 1).toString(),
-        text: generateResponse(inputText, detectedEmotion),
+        text: generateResponse(messageToSend, detectedEmotion),
         sender: 'ai',
         emotion: 'empathetic',
         timestamp: new Date()
@@ -228,7 +231,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onEmotionDetected }) => {
             />
           </div>
           <Button
-            onClick={handleSendMessage}
+            onClick={() => handleSendMessage()}
             disabled={!inputText.trim() || isTyping}
             className="bg-gradient-aurora hover:bg-gradient-sunset shadow-glow hover:shadow-embrace transition-all duration-300 border-0"
           >
@@ -236,6 +239,12 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onEmotionDetected }) => {
           </Button>
         </div>
       </div>
+
+      {/* AI Interactive Section */}
+      <AIInteractiveSection 
+        currentEmotion={currentEmotion} 
+        onSendMessage={handleSendMessage} 
+      />
     </div>
   );
 };

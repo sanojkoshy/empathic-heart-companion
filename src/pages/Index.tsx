@@ -56,7 +56,10 @@ const Index = () => {
           {/* Chat Interface - Takes up more space */}
           <div className="lg:col-span-2">
             <Card className="h-full bg-card/50 backdrop-blur-sm border-0 shadow-embrace overflow-hidden">
-              <ChatInterface onEmotionDetected={handleEmotionDetected} />
+              <ChatInterface 
+                onEmotionDetected={handleEmotionDetected} 
+                currentEmotion={currentEmotion} 
+              />
             </Card>
           </div>
 
