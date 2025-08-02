@@ -2,15 +2,34 @@ import React, { useState } from 'react';
 import WelcomeSection from '@/components/WelcomeSection';
 import ChatInterface from '@/components/ChatInterface';
 import MoodTracker from '@/components/MoodTracker';
+import AISetup from '@/components/AISetup';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 
 const Index = () => {
-  const [currentView, setCurrentView] = useState<'welcome' | 'chat'>('welcome');
+  const [currentView, setCurrentView] = useState<'welcome' | 'setup' | 'chat'>('welcome');
   const [currentEmotion, setCurrentEmotion] = useState<string>('neutral');
+  const [aiSetupComplete, setAiSetupComplete] = useState(false);
+
+  // Check if AI is already set up
+  React.useEffect(() => {
+    const hasApiKey = localStorage.getItem('soulsync_openai_key');
+    if (hasApiKey) {
+      setAiSetupComplete(true);
+    }
+  }, []);
 
   const handleGetStarted = () => {
+    if (aiSetupComplete) {
+      setCurrentView('chat');
+    } else {
+      setCurrentView('setup');
+    }
+  };
+
+  const handleSetupComplete = () => {
+    setAiSetupComplete(true);
     setCurrentView('chat');
   };
 
@@ -24,6 +43,10 @@ const Index = () => {
 
   if (currentView === 'welcome') {
     return <WelcomeSection onGetStarted={handleGetStarted} />;
+  }
+
+  if (currentView === 'setup') {
+    return <AISetup onSetupComplete={handleSetupComplete} />;
   }
 
   return (

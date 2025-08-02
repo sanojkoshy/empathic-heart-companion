@@ -2,9 +2,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
-import { Send, Heart } from 'lucide-react';
+import { Send, Heart, Bot } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import AIInteractiveSection from './AIInteractiveSection';
+import { sendMessageToAI } from '@/services/aiChatService';
 
 interface Message {
   id: string;
@@ -23,7 +24,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onEmotionDetected, curren
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: "Hello, beautiful soul. I'm here to listen and understand. How are you feeling today?",
+      text: "Hello, beautiful soul. I'm SoulSync, your AI companion who's here to truly listen and understand. How are you feeling today?",
       sender: 'ai',
       emotion: 'welcoming',
       timestamp: new Date()
@@ -62,8 +63,22 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onEmotionDetected, curren
     return 'neutral';
   };
 
-  // Generate empathetic responses
-  const generateResponse = (userText: string, emotion: string): string => {
+  // Generate empathetic responses using AI
+  const generateAIResponse = async (userText: string, emotion: string): Promise<string> => {
+    try {
+      // Get recent conversation history for context
+      const recentMessages = messages.slice(-6); // Last 6 messages for context
+      const response = await sendMessageToAI(userText, emotion, recentMessages);
+      return response;
+    } catch (error) {
+      console.error('Error generating AI response:', error);
+      // Fallback to local response if AI fails
+      return generateLocalResponse(userText, emotion);
+    }
+  };
+
+  // Local fallback responses
+  const generateLocalResponse = (userText: string, emotion: string): string => {
     const responses = {
       happy: [
         "I can feel your joy radiating through your words! What's bringing you such happiness?",
@@ -127,24 +142,36 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onEmotionDetected, curren
     // Notify parent component about emotion
     onEmotionDetected?.(detectedEmotion);
 
-    // Simulate AI thinking time
-    setTimeout(() => {
-      const aiResponse: Message = {
-        id: (Date.now() + 1).toString(),
-        text: generateResponse(messageToSend, detectedEmotion),
-        sender: 'ai',
-        emotion: 'empathetic',
-        timestamp: new Date()
-      };
+    // Simulate AI thinking time and generate response
+    setTimeout(async () => {
+      try {
+        const aiResponseText = await generateAIResponse(messageToSend, detectedEmotion);
+        
+        const aiResponse: Message = {
+          id: (Date.now() + 1).toString(),
+          text: aiResponseText,
+          sender: 'ai',
+          emotion: 'empathetic',
+          timestamp: new Date()
+        };
 
-      setMessages(prev => [...prev, aiResponse]);
-      setIsTyping(false);
+        setMessages(prev => [...prev, aiResponse]);
+        setIsTyping(false);
 
-      // Show emotion feedback
-      if (detectedEmotion !== 'neutral') {
+        // Show emotion feedback
+        if (detectedEmotion !== 'neutral') {
+          toast({
+            title: "Emotion detected",
+            description: `I sense you're feeling ${detectedEmotion}. I'm here with you.`,
+          });
+        }
+      } catch (error) {
+        console.error('Error generating response:', error);
+        setIsTyping(false);
         toast({
-          title: "Emotion detected",
-          description: `I sense you're feeling ${detectedEmotion}. I'm here with you.`,
+          title: "Connection issue",
+          description: "I'm having trouble connecting right now, but I'm still here with you.",
+          variant: "destructive"
         });
       }
     }, 1500 + Math.random() * 1000);
@@ -174,7 +201,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onEmotionDetected, curren
               <div className="flex items-start gap-3">
                 {message.sender === 'ai' && (
                   <div className="w-8 h-8 rounded-full bg-gradient-healing flex items-center justify-center breathe">
-                    <Heart className="w-4 h-4 text-healing-foreground" />
+                    <Bot className="w-4 h-4 text-healing-foreground" />
                   </div>
                 )}
                 <div className="flex-1">
@@ -203,7 +230,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onEmotionDetected, curren
             <Card className="max-w-[80%] p-4 bg-gradient-ocean shadow-soft border-0">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-gradient-healing flex items-center justify-center pulse-glow">
-                  <Heart className="w-4 h-4 text-healing-foreground" />
+                  <Bot className="w-4 h-4 text-healing-foreground" />
                 </div>
                 <div className="flex space-x-1">
                   <div className="w-2 h-2 bg-accent rounded-full animate-bounce"></div>
