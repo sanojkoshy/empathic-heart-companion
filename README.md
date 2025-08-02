@@ -1,73 +1,57 @@
-# Welcome to your Lovable project
+<img width="3188" height="1202" alt="frame (3)" src="https://github.com/user-attachments/assets/517ad8e9-ad22-457d-9538-a9e62d137cd7" />
 
-## Project info
+# Empathic Heart Companion 🧠❤️
 
-**URL**: https://lovable.dev/projects/3006d98c-8fec-4719-9471-575676e15656
+## Basic Details
+### Team Name: Heartfelt Hackers
 
-## How can I edit this code?
+### Team Members
+- Team Lead: Sanoj Koshy - [sree buddha college of engineering,pattoor]
 
-There are several ways of editing your application.
 
-**Use Lovable**
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/3006d98c-8fec-4719-9471-575676e15656) and start prompting.
+### Project Description
+An AI-powered emotional support chatbot designed to respond with empathy, provide mental wellness prompts, and pretend it's not just GPT wrapped in kindness.
 
-Changes made via Lovable will be committed automatically to this repo.
+### The Problem (that doesn't exist)
+People need someone to talk to... but friends, therapists, and actual humans are *so* overrated.
 
-**Use your preferred IDE**
+### The Solution (that nobody asked for)
+We built a chatbot that listens, cares, and responds with just the right amount of synthetic sympathy. It's like therapy, but less effective—and free!
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+---
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Technical Details
 
-Follow these steps:
+### Technologies/Components Used
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+For Software:
+- **Languages:** JavaScript, Python  
+- **Frameworks:** React.js, Node.js, Express  
+- **Libraries:** OpenAI API, TailwindCSS, Sentiment.js  
+- **Tools:** VSCode, GitHub, Figma
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+For Hardware:
+- No hardware was emotionally available for this project 😢
 
-# Step 3: Install the necessary dependencies.
-npm i
+---
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+### Implementation
 
-**Edit a file directly in GitHub**
+For Software:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+# Installation
 
-**Use GitHub Codespaces**
+# bash
+git clone https://github.com/sanojkoshy/empathic-heart-companion.git
+cd empathic-heart-companion
+npm install
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+# screenshot
+1.<img width="952" height="490" alt="image" src="https://github.com/user-attachments/assets/d06fcc08-51b0-4d96-83a0-e9eb55ebfae7" />
+2.<img width="804" height="466" alt="image" src="https://github.com/user-attachments/assets/a5905725-0948-4ec5-bbfd-b62f112049c0" />
+this the login page to intract
+3.<img width="935" height="522" alt="image" src="https://github.com/user-attachments/assets/bd5147b8-0e7e-43df-ba79-95a544f4fca5" />
 
-## What technologies are used for this project?
 
-This project is built with:
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/3006d98c-8fec-4719-9471-575676e15656) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
